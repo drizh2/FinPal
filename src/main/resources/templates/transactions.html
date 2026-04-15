@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Transactions</title>
+  <link th:href="@{/css/styles.css}" rel="stylesheet"/>
+</head>
+<body>
+
+<header>
+  <h4 class="logo"><a th:href="@{/}">Fin Pal</a></h4>
+  <nav>
+    <ul class="nav_links">
+      <li><a href="/transactions">Transactions</a></li>
+      <li><a href="/dashboard">Dashboard</a></li>
+      <li><a href="#">Summary</a></li>
+      <li><a href="#">Groups</a></li>
+    </ul>
+  </nav>
+  <a class="cta" th:href="${#authorization.expression('isAuthenticated()')} ? '/logout' : '/login'">
+    <button th:text="${#authorization.expression('isAuthenticated()')} ? 'Logout' : 'Login'"></button>
+  </a>
+</header>
+
+<h1 class="label">Transactions</h1>
+
+<div class="transactions-container">
+  <!-- Transactions list -->
+  <div class="transactions-list">
+    <div th:each="entry : ${transactionsByMonth}">
+      <h2 class="month" th:text="${entry.key}"></h2>
+      <div th:each="transaction : ${entry.value}">
+        <div class="transaction-item" th:classappend="${transaction.type.name() == 'INCOME'} ? ' plus' : ' minus'">
+          <span class="symbol" th:if="${transaction.type.name() == 'INCOME'}">+</span>
+          <span class="symbol" th:if="${transaction.type.name() != 'INCOME'}">-</span>
+          <span th:text="${transaction.description}"></span>
+          <span class="amount" th:text="${transaction.amount} + '$'"></span>
+        </div>
+      </div>
+      <hr/>
+    </div>
+  </div>
+
+  <!-- Add transaction form -->
+  <div class="add-transaction-form">
+    <h3 style="text-align: center; color: white">Add transaction</h3>
+    <form th:action="@{/transactions/add}" method="post" th:object="${transaction}">
+      <select th:field="*{type}">
+        <option value="INCOME">Income</option>
+        <option value="OUTCOME">Outcome</option>
+      </select>
+      <input type="number" step="0.01" th:field="*{amount}" placeholder="Amount"/>
+      <input type="text" th:field="*{description}" placeholder="Description"/>
+      <select th:field="*{category}">
+        <option th:each="c : ${T(com.dadry.finpal.model.enums.Category).values()}"
+                th:value="${c}" th:text="${c}"></option>
+      </select>
+      <button type="submit">Add</button>
+    </form>
+  </div>
+</div>
+
+</body>
+</html>

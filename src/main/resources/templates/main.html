@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Main</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <style>
+        body {
+            background-color: #24252A;
+            font-family: "Montserrat", sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 60vh;
+            margin: 0;
+        }
+
+        h1 {
+            color: #edf0f1;
+            font-size: 128px;
+            margin-bottom: 40px;
+        }
+
+        .link-container {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .link-container a {
+            color: #edf0f1;
+            font-size: 20px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            padding: 0 10px;
+        }
+
+        .link-container a:hover {
+            color: #0088a9;
+        }
+
+        .separator {
+            height: 24px;
+            width: 1px;
+            background-color: #787878;
+        }
+    </style>
+</head>
+<body>
+<h1>Welcome to FinPal</h1>
+<div class="link-container">
+    <a th:href="@{/login}">Login</a>
+    <div class="separator"></div>
+    <a th:href="@{/register}">Register</a>
+    <div class="separator"></div>
+    <a th:href="@{/transactions}">Transactions</a>
+    <div class="separator"></div>
+    <a th:href="@{/dashboard}">Dashboard</a>
+</div>
+</body>
+</html>

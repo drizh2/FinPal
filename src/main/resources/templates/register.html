@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <title>Register Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+<!-- NavBar -->
+<header>
+    <h4 class="logo"><a th:href="@{/}">Fin Pal</a></h4>
+    <nav>
+        <ul class="nav_links">
+            <li><a th:href="@{/transactions}">Transactions</a></li>
+            <li><a th:href="@{/dashboard}">Dashboard</a></li>
+            <li><a href="#">Summary</a></li>
+            <li><a href="#">Groups</a></li>
+        </ul>
+    </nav>
+    <a class="cta" sec:authorize="!isAuthenticated()" th:href="@{/login}">
+        <button>Login</button>
+    </a>
+    <a class="cta" sec:authorize="isAuthenticated()" th:href="@{/logout}">
+        <button>Logout</button>
+    </a>
+</header>
+
+<!-- Contact us content -->
+<h1 class="label">Register</h1>
+<div class="contactContainer">
+    <form th:action="@{/register}" th:object="${user}" method="post">
+        <input type="text" th:field="*{name}" placeholder="Your Name"/>
+        <input type="email" th:field="*{email}" placeholder="Your Email"/>
+        <input type="password" th:field="*{password}" placeholder="Your Passord"/>
+        <button type="submit">Register</button>
+    </form>
+    <button class="formButton"><a class="cta" th:href="@{/login}">Already have an account?</a></button>
+</div>
+
+
+</body>
+</html>

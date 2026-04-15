@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<header>
+    <h4 class="logo"><a th:href="@{/}">Fin Pal</a></h4>
+    <nav>
+        <ul class="nav_links">
+            <li><a href="/transactions">Transactions</a></li>
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="#">Summary</a></li>
+            <li><a href="#">Groups</a></li>
+        </ul>
+    </nav>
+    <a class="cta" th:href="${#authorization.expression('isAuthenticated()')} ? '/logout' : '/login'">
+        <button th:text="${#authorization.expression('isAuthenticated()')} ? 'Logout' : 'Login'"></button>
+    </a>
+</header>
+
+<h1 class="label">Dashboard</h1>
+
+<div class="dashboard-container">
+    <div class="diagram">
+        <canvas id="categoryChart" width="300" height="300"></canvas>
+    </div>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        let categoryLabels = [[${categories}]];
+        let categoryData = [[${totals}]];
+        let backgroundColors = [
+            '#FF6384', '#36A2EB', '#FFCE56', '#8e44ad', '#2ecc71',
+            '#e67e22', '#e74c3c', '#1abc9c', '#34495e', '#f39c12'
+        ];
+
+        new Chart(document.getElementById('categoryChart'), {
+            type: 'pie',
+            data: {
+                labels: categoryLabels,
+                datasets: [{
+                    data: categoryData,
+                    backgroundColor: backgroundColors.slice(0, categoryLabels.length),
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            color: 'white'
+                        }
+                    }
+                }
+            }
+        });
+        /*]]>*/
+    </script>
+
+    <!-- Table -->
+    <div class="dashboard-months">
+        <h2 style="margin-bottom: 20px">By Months</h2>
+        <table style="border-collapse: collapse; width: 100%;">
+            <thead>
+                <tr style="background-color: #ccc;">
+                    <th style="color: #111111">Month</th>
+                    <th style="color: #111111">Spent</th>
+                    <th style="color: #111111">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr th:each="entry : ${monthlyStats}">
+                <td th:text="${entry.month}"></td>
+                <td th:text="${entry.spent > 0 ? entry.spent : entry.spent} + '$'"></td>
+                <td th:text="${entry.total} + '$'"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

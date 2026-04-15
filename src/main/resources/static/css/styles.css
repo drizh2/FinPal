@@ -1,0 +1,337 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:500');
+
+* {
+    margin:0px;
+    padding:0px;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+body {
+    background-color: #24252A;
+}
+
+/*Styles for navbar*/
+
+li, a, button {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    color: #edf0f1;
+    text-decoration: none;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 10%;
+}
+
+.logo {
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    color: #edf0f1;
+    text-decoration: none;
+}
+
+.nav_links {
+    list-style: none;
+}
+
+.nav_links li {
+    display: inline-block;
+    padding: 0px 20px;
+}
+
+a {
+    transition: all 0.3s ease 0s;
+}
+
+a:hover {
+    color: #0088a9
+}
+
+button {
+    padding: 9px 25px;
+    background-color: rgba(0,136,169,1);
+    border: none;
+    border-radius: 50px;
+    /*cursor:*/
+    /*transition: all 0.3s ease 0s;*/
+}
+
+button:hover {
+    background-color: rgba(0,136,169,0.8);
+}
+
+.formButton {
+    margin-top: 20px;
+}
+
+/*Styles for contact us form*/
+.contactContainer {
+    width: 50%;
+    /*	max-width: 600px;*/
+    margin: 50px auto;
+    padding: 40px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 2);
+}
+
+form input,
+form textarea {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    font-size: 20px;
+    padding: 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #f7f7f7;
+    color: #333;
+}
+
+form textarea {
+    padding: 10px 20px 50px 20px;
+}
+
+form input:focus,
+form textarea:focus {
+    outline: none;
+    box-shadow: 0 0 5px #333;
+}
+
+form button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+form button:hover {
+    background-color: #555;
+}
+
+.label {
+    display: flex;
+    justify-content: center;
+    color: black;
+    align-content: center;
+    margin-top: 50px;
+
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    font-size: 40px;
+    color: #edf0f1;
+    text-decoration: none;
+}
+
+/*Styles for footer*/
+footer {
+    background-color: #111;
+}
+
+.footerContainer {
+    width: 100%;
+    margin-top: 100px;
+}
+
+.socialIcons {
+    display: flex;
+    justify-content: center;
+}
+
+.socialIcons a {
+    text-decoration: none;
+    padding: 10px;
+    background-color: white;
+    margin: 10px;
+    border-radius: 50%;
+}
+
+.socialIcons a i {
+    font-size: 2em;
+    color: black;
+    opacity: 0.9;
+}
+/* Hover Effects on Social Media Icons */
+.socialIcons a:hover {
+    background-color: #111;
+    transition: 0.5s;
+}
+
+.footerNav {
+    margin: 30px 0;
+    width: 100%;
+}
+.footerNav ul {
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+}
+.footerNav ul li a {
+    color: white;
+    margin: 20px;
+    text-decoration: none;
+    font-size: 1.3em;
+    opacity: 0.7;
+    transition: 0.5s;
+}
+
+.footerNav ul li a:hover {
+    opacity: 1;
+}
+
+.footerBottom {
+    background-color: #000;
+    padding: 20px;
+    text-align: center;
+}
+.footerBottom p {
+    color: white;
+}
+.designer {
+    opacity: 0.7;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 400;
+    margin: 0px 5px;
+}
+
+.transactions-container, .dashboard-container {
+    display: flex;
+    justify-content: space-around;
+    padding: 40px;
+    color: #fff;
+}
+
+.transactions-list, .add-transaction-form, .dashboard-categories, .dashboard-months {
+    background-color: #2c2c2c;
+    padding: 30px;
+    border-radius: 10px;
+    width: 40%;
+}
+
+.transaction-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #d3d3d3;
+    padding: 10px 20px;
+    margin: 10px 0;
+    border-radius: 10px;
+    color: #222;
+}
+
+.transaction-item .symbol {
+    font-size: 22px;
+    margin-right: 10px;
+}
+
+.transaction-item.plus .symbol {
+    color: green;
+}
+
+.transaction-item.minus .symbol {
+    color: red;
+}
+
+.add-transaction-form h3 {
+    color: black;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.add-transaction-form form {
+    display: flex;
+    flex-direction: column;
+}
+
+.add-transaction-form select, .add-transaction-form input {
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 10px;
+}
+
+.add-transaction-form button {
+    background-color: #444;
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+.dashboard-container {
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.dashboard-categories, .dashboard-months {
+    flex: 1;
+    margin: 0 20px;
+}
+
+.category-legend {
+    list-style: none;
+    margin-top: 20px;
+}
+
+.category-legend li {
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+}
+
+.dot {
+    height: 14px;
+    width: 14px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.dot.meal { background-color: #9b4d1e; }
+.dot.common { background-color: #1ed195; }
+.dot.tech { background-color: #2842f7; }
+
+table {
+    width: 100%;
+    color: white;
+    border-collapse: collapse;
+}
+
+table th, table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #555;
+}
+
+.diagram {
+    width: 30%;
+}
+
+.error-message {
+    color: #ff4d4d;
+    background-color: #ffe6e6;
+    border: 1px solid #ff4d4d;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin: 0 auto 20px auto;
+    margin-top: 20px;
+    text-align: center;
+    font-weight: 500;
+    width: fit-content;
+    max-width: 90%;
+    display: block;
+}
