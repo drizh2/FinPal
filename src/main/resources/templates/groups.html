@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Groups</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet"/>
+</head>
+<body>
+
+<header>
+    <h4 class="logo"><a th:href="@{/}">Fin Pal</a></h4>
+    <nav>
+        <ul class="nav_links">
+            <li><a href="/transactions">Transactions</a></li>
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/groups">Groups</a></li>
+            <li><a href="/planning">Planning</a></li>
+        </ul>
+    </nav>
+    <a class="cta" th:href="${#authorization.expression('isAuthenticated()')} ? '/logout' : '/login'">
+        <button th:text="${#authorization.expression('isAuthenticated()')} ? 'Logout' : 'Login'"></button>
+    </a>
+</header>
+
+<h1 class="label">Groups</h1>
+
+<p class="feedback-message success-message" th:if="${successMessage}" th:text="${successMessage}"></p>
+<p class="feedback-message error-message" th:if="${errorMessage}" th:text="${errorMessage}"></p>
+
+<section class="groups-page">
+    <div class="groups-sidebar">
+        <div class="group-panel">
+            <h2>Create group</h2>
+            <p class="panel-copy">Create a shared group, invite up to 9 registered users, and split every transaction automatically.</p>
+            <form th:action="@{/groups/create}" method="post">
+                <input type="text" name="name" placeholder="Apartment budget" required/>
+                <button type="submit">Create group</button>
+            </form>
+        </div>
+
+        <div class="group-panel" th:if="${!#lists.isEmpty(pendingInvitations)}">
+            <h2>Pending invitations</h2>
+            <div class="invitation-list">
+                <div class="invitation-card" th:each="invitation : ${pendingInvitations}">
+                    <strong th:text="${invitation.groupName}"></strong>
+                    <p th:text="'Invited by ' + ${invitation.inviterName}"></p>
+                    <small th:text="'Sent ' + ${invitation.createdAt}"></small>
+                    <div class="invitation-actions">
+                        <form th:action="@{/groups/invitations/{invitationId}/accept(invitationId=${invitation.id})}" method="post">
+                            <button type="submit">Accept</button>
+                        </form>
+                        <form th:action="@{/groups/invitations/{invitationId}/decline(invitationId=${invitation.id})}" method="post">
+                            <button type="submit" class="secondary-button">Decline</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="groups-content">
+        <div class="empty-state" th:if="${#lists.isEmpty(groups)}">
+            <h2>No active groups yet</h2>
+            <p>Create a group or accept an invitation from another account to start adding shared transactions.</p>
+        </div>
+
+        <div class="group-card" th:each="group : ${groups}">
+            <div class="group-card-header">
+                <div>
+                    <h2 th:text="${group.name}"></h2>
+                    <p th:text="'Created ' + ${group.createdAt}"></p>
+                </div>
+                <div class="group-total">
+                    <span>Total shared spend</span>
+                    <strong th:text="${group.totalExpenses} + '$'"></strong>
+                </div>
+            </div>
+
+            <div class="group-actions">
+                <div class="group-panel" th:if="${group.currentUserIsOwner}">
+                    <h3>Invite user</h3>
+                    <form th:if="${group.canInvite}" th:action="@{/groups/{groupId}/invite(groupId=${group.id})}" method="post">
+                        <input type="email" name="inviteeEmail" placeholder="Registered user email" required/>
+                        <button type="submit">Send invitation</button>
+                    </form>
+                    <p class="panel-copy" th:if="${group.pendingInviteEmail != null}"
+                       th:text="'Invitation pending for ' + ${group.pendingInviteEmail}"></p>
+                    <p class="panel-copy" th:if="${group.pendingInviteEmail == null and !group.canInvite}">
+                        This group already has the maximum 10 users connected.
+                    </p>
+                </div>
+
+                <div class="group-panel" th:if="${group.currentUserCanAddTransactions}">
+                    <h3>Add group transaction</h3>
+                    <form th:action="@{/groups/{groupId}/expenses(groupId=${group.id})}" method="post">
+                        <input type="text" name="description" placeholder="Transaction description" required/>
+                        <input type="number" name="amount" step="0.01" min="0.01" placeholder="Amount" required/>
+                        <button type="submit">Add transaction</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="group-grid">
+                <div class="group-panel">
+                    <h3>Connected users</h3>
+                    <ul class="member-list">
+                        <li th:each="member : ${group.members}">
+                            <span th:text="${member.name + (member.owner ? ' (Owner)' : '')}"></span>
+                            <small th:text="${member.email}"></small>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="group-panel">
+                    <h3>Automatic allocation</h3>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Paid</th>
+                            <th>Share</th>
+                            <th>Balance</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="balance : ${group.balances}">
+                            <td th:text="${balance.name}"></td>
+                            <td th:text="${balance.paid} + '$'"></td>
+                            <td th:text="${balance.owes} + '$'"></td>
+                            <td th:text="${balance.balance} + '$'"
+                                th:classappend="${balance.balance.compareTo(T(java.math.BigDecimal).ZERO) >= 0} ? ' balance-positive' : ' balance-negative'"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="group-panel">
+                <h3>Group transactions</h3>
+                <div class="expense-list" th:if="${!#lists.isEmpty(group.expenses)}">
+                    <div class="expense-row" th:each="expense : ${group.expenses}">
+                        <div>
+                            <strong th:text="${expense.description}"></strong>
+                            <p th:text="'Added by ' + ${expense.paidBy} + ' on ' + ${expense.createdAt}"></p>
+                        </div>
+                        <div class="expense-meta">
+                            <span th:text="${expense.amount} + '$'"></span>
+                            <small th:text="'Each member owes ' + ${expense.sharePerMember} + '$'"></small>
+                        </div>
+                    </div>
+                </div>
+                <p class="panel-copy" th:if="${#lists.isEmpty(group.expenses)}">No group transactions yet.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>
