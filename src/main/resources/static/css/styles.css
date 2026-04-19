@@ -335,3 +335,400 @@ table th, table td {
     max-width: 90%;
     display: block;
 }
+
+.feedback-message {
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin: 20px auto;
+    text-align: center;
+    font-weight: 500;
+    width: fit-content;
+    max-width: 90%;
+}
+
+.success-message {
+    color: #0f5132;
+    background-color: #d1e7dd;
+    border: 1px solid #badbcc;
+}
+
+.groups-page {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 24px;
+    padding: 0 40px 40px;
+    color: #edf0f1;
+    align-items: start;
+}
+
+.groups-sidebar,
+.groups-content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.group-card,
+.group-panel,
+.empty-state {
+    background: #2c2c2c;
+    border-radius: 18px;
+    padding: 24px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+}
+
+.group-card-header,
+.group-actions,
+.group-grid,
+.expense-row {
+    display: flex;
+    gap: 20px;
+}
+
+.group-card {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.group-card-header {
+    justify-content: space-between;
+    align-items: center;
+}
+
+.group-card-header h2,
+.group-panel h2,
+.group-panel h3,
+.empty-state h2 {
+    margin-bottom: 8px;
+    color: #ffffff;
+}
+
+.group-card-header p,
+.panel-copy,
+.expense-row p,
+.member-list small,
+.group-total span,
+.expense-meta small {
+    color: #bfc5d0;
+}
+
+.group-total {
+    text-align: right;
+}
+
+.group-total strong {
+    display: block;
+    font-size: 28px;
+    margin-top: 4px;
+}
+
+.group-actions > .group-panel,
+.group-grid > .group-panel {
+    flex: 1;
+}
+
+.member-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.member-list li {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #42464f;
+}
+
+.expense-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.invitation-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.invitation-card {
+    background: #36383f;
+    border-radius: 14px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.invitation-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.invitation-actions form {
+    width: auto;
+}
+
+.invitation-actions button {
+    width: auto;
+}
+
+.secondary-button {
+    background-color: #575c66;
+}
+
+.secondary-button:hover {
+    background-color: #6a707b;
+}
+
+.expense-row {
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0;
+    border-bottom: 1px solid #42464f;
+}
+
+.expense-row:last-child,
+.member-list li:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.expense-meta {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.balance-positive {
+    color: #6ee7a8;
+}
+
+.balance-negative {
+    color: #ff8d8d;
+}
+
+.empty-state {
+    min-height: 220px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.planning-page {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 24px;
+    padding: 0 40px 40px;
+    color: #edf0f1;
+    align-items: start;
+}
+
+.planning-sidebar,
+.planning-content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.planning-panel {
+    background: #2c2c2c;
+    border-radius: 18px;
+    padding: 24px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+}
+
+.planning-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.goal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 18px;
+}
+
+.goal-card {
+    background: #36383f;
+    border-radius: 16px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.goal-card-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.goal-percent {
+    color: #6ee7a8;
+    font-size: 26px;
+    font-weight: 700;
+}
+
+.goal-progress-bar {
+    width: 100%;
+    height: 10px;
+    border-radius: 999px;
+    background: #4b505b;
+    overflow: hidden;
+}
+
+.goal-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #27c2c1, #6ee7a8);
+    border-radius: 999px;
+}
+
+.goal-stats {
+    display: grid;
+    gap: 6px;
+    color: #c7ccd6;
+    font-size: 14px;
+}
+
+.planned-expense-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.planned-expense-item {
+    background: #36383f;
+    border-radius: 14px;
+    padding: 14px 16px;
+    display: grid;
+    gap: 4px;
+}
+
+.calendar-nav {
+    display: flex;
+    gap: 16px;
+}
+
+.calendar-header,
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.calendar-header {
+    margin-bottom: 10px;
+}
+
+.calendar-header-cell {
+    color: #bfc5d0;
+    text-align: center;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.calendar-cell {
+    min-height: 130px;
+    background: #36383f;
+    border-radius: 16px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.calendar-cell-muted {
+    background: #2f3137;
+    opacity: 0.45;
+}
+
+.calendar-day-number {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.calendar-expense-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.calendar-total {
+    color: #6ee7a8;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.calendar-expense {
+    background: rgba(39, 194, 193, 0.12);
+    border: 1px solid rgba(39, 194, 193, 0.25);
+    color: #edf0f1;
+    border-radius: 12px;
+    padding: 8px 10px;
+    font-size: 13px;
+    line-height: 1.35;
+}
+
+@media (max-width: 1100px) {
+    .groups-page,
+    .planning-page {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .transactions-container,
+    .dashboard-container,
+    .group-card-header,
+    .group-actions,
+    .group-grid,
+    .expense-row,
+    .planning-header-row,
+    .goal-card-top {
+        flex-direction: column;
+    }
+
+    .transactions-list,
+    .add-transaction-form,
+    .dashboard-categories,
+    .dashboard-months,
+    .diagram {
+        width: 100%;
+        margin: 0;
+    }
+
+    .groups-page,
+    .planning-page {
+        padding: 0 20px 30px;
+    }
+
+    .member-list li {
+        flex-direction: column;
+    }
+
+    .group-total,
+    .expense-meta {
+        text-align: left;
+    }
+
+    .calendar-header,
+    .calendar-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
