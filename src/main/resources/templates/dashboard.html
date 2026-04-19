@@ -14,8 +14,8 @@
         <ul class="nav_links">
             <li><a href="/transactions">Transactions</a></li>
             <li><a href="/dashboard">Dashboard</a></li>
-            <li><a href="#">Summary</a></li>
-            <li><a href="#">Groups</a></li>
+            <li><a href="/groups">Groups</a></li>
+            <li><a href="/planning">Planning</a></li>
         </ul>
     </nav>
     <a class="cta" th:href="${#authorization.expression('isAuthenticated()')} ? '/logout' : '/login'">
