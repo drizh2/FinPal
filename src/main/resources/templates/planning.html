@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Planning</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet"/>
+</head>
+<body>
+
+<header>
+    <h4 class="logo"><a th:href="@{/}">Fin Pal</a></h4>
+    <nav>
+        <ul class="nav_links">
+            <li><a href="/transactions">Transactions</a></li>
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/groups">Groups</a></li>
+            <li><a href="/planning">Planning</a></li>
+        </ul>
+    </nav>
+    <a class="cta" th:href="${#authorization.expression('isAuthenticated()')} ? '/logout' : '/login'">
+        <button th:text="${#authorization.expression('isAuthenticated()')} ? 'Logout' : 'Login'"></button>
+    </a>
+</header>
+
+<h1 class="label">Planning</h1>
+
+<p class="feedback-message success-message" th:if="${successMessage}" th:text="${successMessage}"></p>
+<p class="feedback-message error-message" th:if="${errorMessage}" th:text="${errorMessage}"></p>
+
+<section class="planning-page">
+    <div class="planning-sidebar">
+        <div class="planning-panel">
+            <h2>Add goal</h2>
+            <p class="panel-copy">Set a target and watch your current savings progress against it automatically.</p>
+            <form th:action="@{/planning/goals}" method="post">
+                <input type="text" name="title" placeholder="Emergency fund" required/>
+                <input type="text" name="description" placeholder="Optional description"/>
+                <input type="number" name="targetAmount" step="0.01" min="0.01" placeholder="Target amount" required/>
+                <input type="date" name="targetDate" required/>
+                <button type="submit">Save goal</button>
+            </form>
+        </div>
+
+        <div class="planning-panel">
+            <h2>Plan expense</h2>
+            <p class="panel-copy">Schedule future spending and see it appear on your calendar before it happens.</p>
+            <form th:action="@{/planning/expenses}" method="post">
+                <input type="text" name="title" placeholder="Vacation deposit" required/>
+                <input type="text" name="notes" placeholder="Optional notes"/>
+                <input type="number" name="amount" step="0.01" min="0.01" placeholder="Amount" required/>
+                <input type="date" name="plannedDate" required/>
+                <button type="submit">Add planned expense</button>
+            </form>
+        </div>
+
+        <div class="planning-panel">
+            <h2>Upcoming expenses</h2>
+            <div class="planned-expense-list" th:if="${!#lists.isEmpty(planning.upcomingExpenses)}">
+                <div class="planned-expense-item" th:each="expense : ${planning.upcomingExpenses}">
+                    <strong th:text="${expense.title}"></strong>
+                    <span th:text="${expense.amount} + '$'"></span>
+                    <small th:text="${expense.plannedDate}"></small>
+                </div>
+            </div>
+            <p class="panel-copy" th:if="${#lists.isEmpty(planning.upcomingExpenses)}">No future expenses planned yet.</p>
+        </div>
+    </div>
+
+    <div class="planning-content">
+        <div class="planning-panel">
+            <div class="planning-header-row">
+                <h2>Financial goals</h2>
+            </div>
+            <div class="goal-grid" th:if="${!#lists.isEmpty(planning.goals)}">
+                <div class="goal-card" th:each="goal : ${planning.goals}">
+                    <div class="goal-card-top">
+                        <div>
+                            <h3 th:text="${goal.title}"></h3>
+                            <p class="panel-copy" th:text="${goal.description != null ? goal.description : 'No description'}"></p>
+                        </div>
+                        <span class="goal-percent" th:text="${goal.progressPercent} + '%'"></span>
+                    </div>
+                    <div class="goal-progress-bar">
+                        <div class="goal-progress-fill" th:style="'width:' + ${goal.progressPercent} + '%'"></div>
+                    </div>
+                    <div class="goal-stats">
+                        <span th:text="'Saved: ' + ${goal.progressAmount} + '$'"></span>
+                        <span th:text="'Target: ' + ${goal.targetAmount} + '$'"></span>
+                        <span th:text="'Remaining: ' + ${goal.remainingAmount} + '$'"></span>
+                        <span th:text="'Target date: ' + ${goal.targetDate}"></span>
+                    </div>
+                </div>
+            </div>
+            <p class="panel-copy" th:if="${#lists.isEmpty(planning.goals)}">No financial goals yet. Add one from the left panel.</p>
+        </div>
+
+        <div class="planning-panel">
+            <div class="planning-header-row">
+                <h2 th:text="${planning.monthLabel}"></h2>
+                <div class="calendar-nav">
+                    <a th:href="@{/planning(month=${planning.previousMonth})}">Previous</a>
+                    <a th:href="@{/planning(month=${planning.nextMonth})}">Next</a>
+                </div>
+            </div>
+
+            <div class="calendar-header">
+                <div class="calendar-header-cell" th:each="header : ${planning.calendar.headers}" th:text="${header}"></div>
+            </div>
+
+            <div class="calendar-grid">
+                <div class="calendar-cell"
+                     th:each="day : ${planning.calendar.days}"
+                     th:classappend="${day.inMonth} ? '' : ' calendar-cell-muted'">
+                    <div class="calendar-day-number" th:text="${day.dayNumber}"></div>
+                    <div class="calendar-expense-list" th:if="${day.inMonth}">
+                        <span class="calendar-total" th:if="${!#lists.isEmpty(day.expenses)}"
+                              th:text="${day.totalAmount} + '$'"></span>
+                        <div class="calendar-expense"
+                             th:each="expense : ${day.expenses}"
+                             th:text="${expense.title} + ' • ' + ${expense.amount} + '$'"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>
