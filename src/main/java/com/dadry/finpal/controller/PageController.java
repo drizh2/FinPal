@@ -1,4 +1,4 @@
-package com.dadry.finpal.conroller;
+package com.dadry.finpal.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

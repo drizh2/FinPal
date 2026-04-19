@@ -13,8 +13,8 @@
     <ul class="nav_links">
       <li><a href="/transactions">Transactions</a></li>
       <li><a href="/dashboard">Dashboard</a></li>
-      <li><a href="#">Summary</a></li>
-      <li><a href="#">Groups</a></li>
+      <li><a href="/groups">Groups</a></li>
+      <li><a href="/planning">Planning</a></li>
     </ul>
   </nav>
   <a class="cta" th:href="${#authorization.expression('isAuthenticated()')} ? '/logout' : '/login'">
@@ -45,13 +45,13 @@
   <div class="add-transaction-form">
     <h3 style="text-align: center; color: white">Add transaction</h3>
     <form th:action="@{/transactions/add}" method="post" th:object="${transaction}">
-      <select th:field="*{type}">
+      <select th:field="*{type}" id="transaction-type">
         <option value="INCOME">Income</option>
         <option value="OUTCOME">Outcome</option>
       </select>
       <input type="number" step="0.01" th:field="*{amount}" placeholder="Amount"/>
       <input type="text" th:field="*{description}" placeholder="Description"/>
-      <select th:field="*{category}">
+      <select th:field="*{category}" id="transaction-category">
         <option th:each="c : ${T(com.dadry.finpal.model.enums.Category).values()}"
                 th:value="${c}" th:text="${c}"></option>
       </select>
@@ -59,6 +59,25 @@
     </form>
   </div>
 </div>
+
+<script>
+  const typeSelect = document.getElementById('transaction-type');
+  const categorySelect = document.getElementById('transaction-category');
+
+  function toggleCategoryAvailability() {
+    const isIncome = typeSelect.value === 'INCOME';
+    categorySelect.disabled = isIncome;
+
+    if (isIncome) {
+      categorySelect.value = '';
+    } else if (!categorySelect.value && categorySelect.options.length > 0) {
+      categorySelect.selectedIndex = 0;
+    }
+  }
+
+  typeSelect.addEventListener('change', toggleCategoryAvailability);
+  toggleCategoryAvailability();
+</script>
 
 </body>
 </html>

@@ -49,14 +49,21 @@
 </head>
 <body>
 <h1>Welcome to FinPal</h1>
-<div class="link-container">
+<div class="link-container" th:if="${#authorization.expression('!isAuthenticated()')}">
     <a th:href="@{/login}">Login</a>
     <div class="separator"></div>
     <a th:href="@{/register}">Register</a>
-    <div class="separator"></div>
+</div>
+<div class="link-container" th:if="${#authorization.expression('isAuthenticated()')}">
     <a th:href="@{/transactions}">Transactions</a>
     <div class="separator"></div>
     <a th:href="@{/dashboard}">Dashboard</a>
+    <div class="separator"></div>
+    <a th:href="@{/groups}">Groups</a>
+    <div class="separator"></div>
+    <a th:href="@{/planning}">Planning</a>
+    <div class="separator"></div>
+    <a th:href="@{/logout}">Logout</a>
 </div>
 </body>
 </html>

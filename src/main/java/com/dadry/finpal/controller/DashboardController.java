@@ -1,4 +1,4 @@
-package com.dadry.finpal.conroller;
+package com.dadry.finpal.controller;
 
 import com.dadry.finpal.model.User;
 import com.dadry.finpal.service.TransactionService;
